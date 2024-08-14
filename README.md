@@ -35,17 +35,11 @@ npm install
 ```
 
 3. **Configure API**
-   Add the Backend API URL to `vite.config.ts` file
+   Add or replace relevant BE API URLs to `.env.development` file
 ```bash
-proxy: {
-      '/chatapp': {
-        target: <Add BE URL>,
-        changeOrigin: true,
-        ws: true,
-        rewrite: (path) => path.replace(/^\/chatapp/, ''),
-      },
+VITE_API_URL=<BE API URL>
+VITE_WS_HOST=l<BE websocket host>
 ```
-
 
 4. Run the application
 ```bash

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = '/chatapp';
+const WS_HOST = import.meta.env.VITE_WS_HOST;
 
 export interface User {
     id: string;
@@ -50,7 +51,6 @@ export const sendMessage = (token: string, message: Message) =>
 
 export const getWebSocket = (token: AuthResponse) =>{
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const host = "goldfish-app-ewgy2.ondigitalocean.app";
-    return new WebSocket(`${protocol}//${host}/ws?token=${token.token}`);
+    return new WebSocket(`${protocol}//${WS_HOST}/ws?token=${token.token}`);
 }
 

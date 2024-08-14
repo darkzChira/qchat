@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Message, User, getChatHistory, sendMessage } from '../services/api.ts';
 import useWebSocket from './useWebSocket.ts';
 
@@ -7,39 +7,46 @@ const useChat = (selectedUser: User, authToken: string, userId: string, onlineUs
     const socket = useWebSocket();
     const chatEndRef = useRef<HTMLDivElement | null>(null);
 
+    const scrollToBottom = useCallback(() => {
+        if (chatEndRef.current) {
+            chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, []);
+
     useEffect(() => {
         if (!selectedUser || !authToken) return;
 
         getChatHistory(authToken, userId, selectedUser.id)
             .then((response) => {
                 setChatHistory(response.data.reverse());
-                scrollToBottom();
             })
             .catch(() => {
-                alert('Failed to fetch chat history')
+                alert('Failed to fetch chat history');
             });
 
         if (socket) {
             socket.onmessage = (event) => {
                 const data = JSON.parse(event.data);
 
-                if (data.type === 'message' &&
-                    (data.sender_id === selectedUser.id || data.receiver_id === selectedUser.id)) {
+                if (
+                    data.type === 'message' &&
+                    (data.sender_id === selectedUser.id || data.receiver_id === selectedUser.id)
+                ) {
                     setChatHistory((prev) => [...prev, data]);
-                    scrollToBottom();
                 }
             };
         }
+
         return () => {
             if (socket) {
                 socket.onmessage = null;
-            }
+            };
         };
     }, [selectedUser, authToken, userId, socket]);
 
-    const scrollToBottom = () => {
-        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
+    useEffect(() => {
+        scrollToBottom();
+    }, [chatHistory, scrollToBottom]);
 
     const sendMessageToUser = (message: Message) => {
         const isSelectedUserOnline = selectedUser ? onlineUsersIds.includes(selectedUser.id) : false;
@@ -50,7 +57,6 @@ const useChat = (selectedUser: User, authToken: string, userId: string, onlineUs
             sendMessage(authToken, message)
                 .then(() => {
                     setChatHistory((prev) => [...prev, message]);
-                    scrollToBottom();
                 })
                 .catch(() => {
                     alert('Failed to send message');
@@ -62,4 +68,3 @@ const useChat = (selectedUser: User, authToken: string, userId: string, onlineUs
 };
 
 export default useChat;
-

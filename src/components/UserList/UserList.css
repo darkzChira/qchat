@@ -1,0 +1,49 @@
+.user-list-container {
+    max-width: 350px;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-container h5 {
+    font-weight: bold;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.list-group-item:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-user {
+    background-color: #ECF3FF !important;
+}
+
+.selected-user h6,
+.selected-user small {
+
+}
+
+.logout-container {
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    border-top: 1px solid #dee2e6;
+}
+
+.logout-button {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.status-circle {
+    width: 5px;
+    height: 5px;
+    display: inline-block;
+}

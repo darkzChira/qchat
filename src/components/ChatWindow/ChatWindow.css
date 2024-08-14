@@ -1,0 +1,44 @@
+.chat-window-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-bottom: 20px;
+}
+
+.settings-tray {
+    background: #eee;
+    padding: 10px;
+}
+
+.chat-panel {
+    background: #f8f9fa;
+    padding: 15px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.chat-bubble {
+    padding: 10px;
+    background: #eee;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+.chat-bubble--left {
+    background: #CFD1D5;
+}
+
+.chat-bubble--right {
+    background: #007bff;
+    color: white;
+}
+
+.chat-box-tray {
+    background: #eee;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 100;
+}

@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/chatapp/:match*",
+      "destination": "https://goldfish-app-ewgy2.ondigitalocean.app/:match*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ]
+}
